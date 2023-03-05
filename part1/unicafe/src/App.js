@@ -52,20 +52,26 @@ const Statistics = ({ bad, good, neutral, total, average, positive }) => {
       <StatisticLine text='bad' value={bad} />
       <StatisticLine text='All' value={total} />
       <StatisticLine text='Average' value={average} />
-      <StatisticLine text='positive' value={positive} />
+      <StatisticLine text='Positive' value={positive} percentage='%' />
     </>
   );
 };
 
-const StatisticLine = ({ text, value }) => {
+const StatisticLine = ({ text, value, percentage }) => {
   return (
-    <p>
-      {text} {value}
-    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>{text}</td>
+          <td>
+            {value} {percentage}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 
 const Button = ({ clickAction, feedbackType, text }) => {
-  console.log(text);
   return <button onClick={() => clickAction(feedbackType + 1)}>{text}</button>;
 };
