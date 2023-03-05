@@ -18,6 +18,12 @@ const App = () => {
         exercises: 14,
         id: 3,
       },
+
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4,
+      },
     ],
   };
 
@@ -31,6 +37,7 @@ const Course = ({ course }) => {
     <>
       <Header course={course.name} />
       <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </>
   );
 };
@@ -52,12 +59,11 @@ const Content = ({ parts }) => {
 };
 
 const Total = ({ parts }) => {
-  return (
-    <p>
-      Number of exercises{' '}
-      {parts[0].exercises + parts[1].exercises + parts[2].exercises}
-    </p>
-  );
+  let total = 0;
+  parts.forEach((part) => {
+    total += part.exercises;
+  });
+  return <h3>Number of exercises {total}</h3>;
 };
 
 const Part = ({ partName, exercises }) => {
