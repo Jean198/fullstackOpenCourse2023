@@ -15,9 +15,13 @@ const App = () => {
     <div>
       <h1>Give feedback</h1>
       <div>
-        <button onClick={() => setGood(good + 1)}>good</button>
-        <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
-        <button onClick={() => setBad(bad + 1)}>bad</button>
+        <Button text='good' clickAction={setGood} feedbackType={good} />
+        <Button
+          text='neutral'
+          clickAction={setNeutral}
+          feedbackType={neutral}
+        />
+        <Button text='bad' clickAction={setBad} feedbackType={bad} />
       </div>
       <div>
         <h1>Statistics</h1>
@@ -40,25 +44,28 @@ const App = () => {
 
 export default App;
 
-const Statistics = ({
-  bad,
-  good,
-  neutral,
-  total,
-  average,
-  positive,
-  setBad,
-  setGood,
-  setNeutral,
-}) => {
+const Statistics = ({ bad, good, neutral, total, average, positive }) => {
   return (
     <>
-      <p>Good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>Bad {bad}</p>
-      <p>All {total}</p>
-      <p>Average {average}</p>
-      <p>Positive {positive} %</p>
+      <StatisticLine text='good' value={good} />
+      <StatisticLine text='neutral' value={neutral} />
+      <StatisticLine text='bad' value={bad} />
+      <StatisticLine text='All' value={total} />
+      <StatisticLine text='Average' value={average} />
+      <StatisticLine text='positive' value={positive} />
     </>
   );
+};
+
+const StatisticLine = ({ text, value }) => {
+  return (
+    <p>
+      {text} {value}
+    </p>
+  );
+};
+
+const Button = ({ clickAction, feedbackType, text }) => {
+  console.log(text);
+  return <button onClick={() => clickAction(feedbackType + 1)}>{text}</button>;
 };
