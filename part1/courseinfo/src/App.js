@@ -30,21 +30,23 @@ const Content = ({ parts, exercises }) => {
   const { exercises1, exercises2, exercises3 } = exercises;
 
   return (
-    <>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-    </>
+    <div>
+      <Part partName={part1} exercisesNumber={exercises1} />
+      <Part partName={part2} exercisesNumber={exercises2} />
+      <Part partName={part3} exercisesNumber={exercises3} />
+    </div>
   );
 };
 
 const Total = ({ exercises }) => {
   const { exercises1, exercises2, exercises3 } = exercises;
   return <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>;
+};
+
+const Part = ({ partName, exercisesNumber }) => {
+  return (
+    <p>
+      {partName} {exercisesNumber}
+    </p>
+  );
 };
