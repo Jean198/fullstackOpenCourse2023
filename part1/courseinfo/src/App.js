@@ -59,10 +59,11 @@ const Content = ({ parts }) => {
 };
 
 const Total = ({ parts }) => {
-  let total = 0;
-  parts.forEach((part) => {
-    total += part.exercises;
-  });
+  const total = parts.reduce((s, p) => {
+    console.log(s);
+    return s + p.exercises;
+  }, 0);
+
   return <h3>Number of exercises {total}</h3>;
 };
 
