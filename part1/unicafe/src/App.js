@@ -7,12 +7,43 @@ const App = () => {
   const [bad, setBad] = useState(0);
 
   const total = good + bad + neutral;
-  const average = (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad);
-  const positive = (good / total) * 100;
+  const average =
+    (good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad) || 0;
+  const positive = (good / total) * 100 || 0;
 
   return (
     <div>
       <h1>Give feedback</h1>
+      <Statistics
+        bad={bad}
+        good={good}
+        neutral={neutral}
+        total={total}
+        average={average}
+        positive={positive}
+        setBad={setBad}
+        setGood={setGood}
+        setNeutral={setNeutral}
+      />
+    </div>
+  );
+};
+
+export default App;
+
+const Statistics = ({
+  bad,
+  good,
+  neutral,
+  total,
+  average,
+  positive,
+  setBad,
+  setGood,
+  setNeutral,
+}) => {
+  return (
+    <>
       <div>
         <button onClick={() => setGood(good + 1)}>good</button>
         <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
@@ -28,8 +59,6 @@ const App = () => {
       <p>All {total}</p>
       <p>Average {average}</p>
       <p>Positive {positive} %</p>
-    </div>
+    </>
   );
 };
-
-export default App;
