@@ -4,8 +4,20 @@ const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '+359876980808' },
   ]);
+  const [filteredPersons, setFilteredPersons] = useState(persons);
   const [newName, setNewName] = useState('');
   const [phone, setPhone] = useState('');
+
+  const handleSearch = (e) => {
+    const searchString = e.target.value;
+    setFilteredPersons(
+      persons.filter((person) =>
+        person.name
+          .toLocaleLowerCase()
+          .includes(searchString.toLocaleLowerCase())
+      )
+    );
+  };
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
@@ -25,7 +37,12 @@ const App = () => {
     ) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons([...persons, { name: newName, number: phone }]);
+      const newPerson = {
+        name: newName,
+        number: phone,
+      };
+      setPersons([...persons, newPerson]);
+      setFilteredPersons([...persons, newPerson]);
       setPhone('');
       setNewName('');
     }
@@ -36,19 +53,29 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input onChange={handleNameChange} value={newName} />
+          search person: <input onChange={handleSearch} />
         </div>
+        <br />
+        <br />
+        <div>
+          name: <input onChange={handleNameChange} value={newName} />
+        </div>{' '}
+        <br />
         <div>
           Phone:{' '}
           <input type='text' onChange={handlePhoneChange} value={phone} />
         </div>
+        <br />
+        <br />
         <div>
           <button type='submit'>add</button>
         </div>
+        <br />
+        <br />
       </form>
       <h2>Numbers</h2>
       <div>
-        {persons.map((person) => {
+        {filteredPersons.map((person) => {
           return (
             <p key={person.name}>
               {person.name} {person.number}
