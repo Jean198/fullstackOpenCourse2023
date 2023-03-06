@@ -10,8 +10,17 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPersons([...persons, { name: newName }]);
-    setNewName('');
+    if (
+      persons.some(
+        (person) =>
+          person.name.toLocaleLowerCase() === newName.toLocaleLowerCase()
+      )
+    ) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons([...persons, { name: newName }]);
+      setNewName('');
+    }
   };
 
   return (
@@ -27,8 +36,8 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <div>
-        {persons.map((person, index) => {
-          return <p key={index}>{person.name}</p>;
+        {persons.map((person) => {
+          return <p key={person.name}>{person.name}</p>;
         })}
       </div>
     </div>
