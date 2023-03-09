@@ -1,5 +1,5 @@
-require('dotenv').config();
 const Blog = require('../models/blog');
+require('dotenv').config();
 
 const getBlogs = async (request, response) => {
   const blogs = await Blog.find({});
@@ -7,9 +7,13 @@ const getBlogs = async (request, response) => {
 };
 
 const postBlog = async (request, response) => {
-  const blog = await new Blog(request.body);
-  blog.save();
-  response.status(201).json(blog);
+  console.log(request.body);
+  try {
+    const blog = await Blog.create(request.body);
+    response.status(201).json(blog);
+  } catch (error) {
+    response.status(400).json(error);
+  }
 };
 
 module.exports = {

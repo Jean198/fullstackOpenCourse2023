@@ -81,3 +81,16 @@ test('Blog with likes property missing will default to the value 0 ', async () =
 
   expect(response.body.likes).toEqual(0);
 });
+
+test('blog without title is not  added', async () => {
+  const newBlog = {
+    author: 'Koukou',
+    like: 345,
+    url: 'test url',
+  };
+
+  await api.post('/api/blogs/postblog').expect(400);
+  const response = await api.get('/api/blogs');
+
+  expect(response.body).toHaveLength(initialBlogs.length);
+});
