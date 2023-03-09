@@ -32,8 +32,38 @@ const deleteBlog = async (request, response) => {
   }
 };
 
+const updateBlog = async (request, response) => {
+  try {
+    const { id } = request.params;
+    const { title, author, likes, url } = request.body;
+    const updatedTask = {
+      title,
+      author,
+      likes,
+      url,
+    };
+    const taskToUpdate = await Blog.findByIdAndUpdate(
+      { _id: id },
+      updatedTask,
+      {
+        new: true,
+      }
+    );
+
+    if (!taskToUpdate) {
+      return response
+        .status(404)
+        .json(`Can't update blog. Blog with id ${id} can't be found!`);
+    }
+    response.status(200).json(taskToUpdate);
+  } catch (error) {
+    response.status(500).json({ msg: error.message });
+  }
+};
+
 module.exports = {
   getBlogs,
   postBlog,
   deleteBlog,
+  updateBlog,
 };
