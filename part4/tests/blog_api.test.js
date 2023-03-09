@@ -46,7 +46,22 @@ test('blogs are identified by id', async () => {
   const response = await api.get('/api/blogs');
 
   const contents = response.body.map((blog) => blog.id);
-  console.log(contents);
-
   expect(contents).toBeDefined();
+});
+
+test('A new blog can be added ', async () => {
+  const newBlog = {
+    title: 'thirdTestBlog',
+    author: 'Jean Niyigaba',
+    url: 'testUrl',
+    likes: 134,
+  };
+
+  await api
+    .post('/api/blogs/postblog')
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+  const response = await api.get('/api/blogs');
+
+  expect(response.body).toHaveLength(initialBlogs.length + 1);
 });
