@@ -41,3 +41,12 @@ test('there are two blogs', async () => {
 
   expect(response.body).toHaveLength(initialBlogs.length);
 });
+
+test('blogs are identified by id', async () => {
+  const response = await api.get('/api/blogs');
+
+  const contents = response.body.map((blog) => blog.id);
+  console.log(contents);
+
+  expect(contents).toBeDefined();
+});
