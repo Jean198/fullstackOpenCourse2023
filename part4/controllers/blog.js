@@ -5,7 +5,10 @@ const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 
 const getBlogs = asyncHandler(async (request, response) => {
-  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 });
+  const blogs = await Blog.find({ user: request.body.userId }).populate(
+    'user',
+    { username: 1, name: 1 }
+  );
   response.json(blogs);
 });
 

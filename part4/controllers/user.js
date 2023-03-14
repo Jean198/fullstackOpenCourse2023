@@ -7,7 +7,7 @@ const cookie = require('cookie');
 
 // Generate token
 const generateToken = (user) => {
-  return jwt.sign({ user }, process.env.SECRET, { expiresIn: '1h' });
+  return jwt.sign({ user }, process.env.SECRET, { expiresIn: '1min' });
 };
 
 const createUser = asyncHandler(async (request, response) => {
@@ -105,8 +105,36 @@ const loginUser = asyncHandler(async (request, response) => {
   }
 });
 
+//Get login status
+const loginStatus = asyncHandler(async (request, response) => {
+  const token = request.cookies.token;
+  if (!token) {
+    return response.json(false);
+  }
+
+  const verified = jwt.verify(token, process.env.SECRET);
+  if (verified) {
+    return response.json(true);
+  }
+  return response.json(false);
+});
+
+const logoutUser = asyncHandler(async (request, response) => {
+  response.cookie('token', '', {
+    path: '/',
+    httpOnly: true,
+    expires: new Date(0),
+    sameSite: 'none',
+    secure: true,
+  });
+
+  response.status(200).json({ message: 'User logout succesfully!' });
+});
+
 module.exports = {
   createUser,
   getAllUsers,
   loginUser,
+  loginStatus,
+  logoutUser,
 };

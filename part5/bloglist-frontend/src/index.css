@@ -1,0 +1,11 @@
+.success-notification {
+  border: solid 2px green;
+  padding: 15px;
+  width: 100%;
+}
+
+.error-notification {
+  border: solid 2px red;
+  padding: 15px;
+  width: 100%;
+}

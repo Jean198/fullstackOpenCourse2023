@@ -17,7 +17,7 @@ const protectRoute = asyncHandler(async (request, response, next) => {
     response.status(401);
     throw new Error('User not found!');
   }
-  console.log(user);
+
   request.body.userId = user._id;
 
   next();
