@@ -13,9 +13,10 @@ const getBlogs = asyncHandler(async (request, response) => {
 });
 
 const postBlog = asyncHandler(async (request, response) => {
-  const body = request.body;
-  const title = request.body.title;
-  const user = await User.findById(body.userId);
+  const body = request.body.newBlog;
+  const title = body.title;
+
+  const user = await User.findById(request.body.userId);
 
   if (!user) {
     response.status(500);
@@ -29,6 +30,7 @@ const postBlog = asyncHandler(async (request, response) => {
 
   const blog = await Blog.create({
     title: body.title,
+    url: body.url,
     author: body.author,
     likes: body.likes,
     user: user.id,

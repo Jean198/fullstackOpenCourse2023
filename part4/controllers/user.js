@@ -7,7 +7,7 @@ const cookie = require('cookie');
 
 // Generate token
 const generateToken = (user) => {
-  return jwt.sign({ user }, process.env.SECRET, { expiresIn: '1min' });
+  return jwt.sign({ user }, process.env.SECRET, { expiresIn: '1d' });
 };
 
 const createUser = asyncHandler(async (request, response) => {
