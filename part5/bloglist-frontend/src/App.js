@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import blogService from './services/blogs';
 import userService from './services/user';
 import BlogForm from './components/BlogForm';
@@ -78,7 +78,7 @@ const App = () => {
       const createdBlog = await blogService.createBlog({
         newBlog,
       });
-      setNotificationMessage('success');
+      setNotificationMessage(`sucesss ${newBlog.title} has been created`);
       setTimeout(() => {
         setNotificationMessage(null);
       }, 5000);
@@ -90,6 +90,34 @@ const App = () => {
       setTimeout(() => {
         setNotificationMessage(null);
       }, 5000);
+    }
+  };
+
+  //---------------------------------------------------------------------------------------------------------------
+
+  const updateBlog = async (blog) => {
+    const updatedBlog = await blogService.updateBlog(blog.id, blog);
+    let index = blogs.findIndex(
+      (blogToReplace) => blogToReplace.id === updatedBlog.id
+    );
+    const updatedBlogs = [...blogs];
+    updatedBlogs[index] = updatedBlog;
+    setBlogs(updatedBlogs);
+  };
+
+  //------------------------------------------------------------------------------------------------------------------
+
+  const removeBlog = async (blog) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      try {
+        await blogService.removeBlog(blog.id);
+        const blogsCopy = [...blogs];
+        const updatedBlogs = blogsCopy.filter((blogs) => blogs.id !== blog.id);
+        console.log(updatedBlogs);
+        setBlogs(updatedBlogs);
+      } catch (exception) {
+        console.log(exception);
+      }
     }
   };
 
@@ -138,8 +166,19 @@ const App = () => {
       <h2>blogs</h2>
       {user &&
         blogs.map((blog, index) => {
-          return <Blog blog={blog} key={index} />;
+          return (
+            <Blog
+              blog={blog}
+              key={index}
+              updateBlog={updateBlog}
+              removeBlog={removeBlog}
+            />
+          );
         })}
+
+      <p>
+        Blog app, Department of Computer Science, University of Helsinki 2023
+      </p>
     </div>
   );
 };

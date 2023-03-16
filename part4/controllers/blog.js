@@ -42,6 +42,8 @@ const postBlog = asyncHandler(async (request, response) => {
   response.status(201).json(blog);
 });
 
+//---------------------------------------------------------------------------------------
+
 const deleteBlog = asyncHandler(async (request, response) => {
   const { id } = request.params;
   const blogToDelete = await Blog.findByIdAndDelete(id);
@@ -51,7 +53,7 @@ const deleteBlog = asyncHandler(async (request, response) => {
   }
 
   //Match blog with the user who created it
-  if (blogToDelete.user.toString() !== request.body.userId) {
+  if (blogToDelete.user.toString() !== request.body.userId.toString()) {
     response.status(401);
     throw new Error('User not authorized to delete this blog');
   }
@@ -60,30 +62,31 @@ const deleteBlog = asyncHandler(async (request, response) => {
   response.status(200).json({ message: 'Blog deleted successfully!' });
 });
 
+//-------------------------------------------------------------------------------------------
+
 const updateBlog = asyncHandler(async (request, response) => {
   try {
-    const { id } = request.params;
-    const { title, author, likes, url } = request.body;
-    const updatedTask = {
+    const blogId = request.params.id;
+
+    const { title, author, likes, url, user } = request.body;
+    const updatedBlog = {
       title,
       author,
       likes,
       url,
+      user,
     };
-    const taskToUpdate = await Blog.findByIdAndUpdate(
-      { _id: id },
-      updatedTask,
-      {
-        new: true,
-      }
-    );
 
-    if (!taskToUpdate) {
+    const blogToUpdate = await Blog.findByIdAndUpdate(blogId, updatedBlog, {
+      new: true,
+    });
+
+    if (!blogToUpdate) {
       return response
         .status(404)
         .json(`Can't update blog. Blog with id ${id} can't be found!`);
     }
-    response.status(200).json(taskToUpdate);
+    response.status(200).json(blogToUpdate);
   } catch (error) {
     response.status(500).json({ msg: error.message });
   }

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const config = require('./utils/config');
 const blogsRouter = require('./routes/blogRouter');
 const usersRouter = require('./routes/userRouter');
+const testRouter = require('./routes/testRouter');
 const errorHandler = require('./middlewares/errorMiddleware');
 const cookieParser = require('cookie-parser');
 
@@ -18,6 +19,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
+
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing');
+  app.use('/api/testing', testRouter);
+}
 
 app.get('/', (req, res) => {
   res.send('Homepage');
