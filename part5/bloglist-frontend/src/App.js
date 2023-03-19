@@ -165,16 +165,18 @@ const App = () => {
 
       <h2>blogs</h2>
       {user &&
-        blogs.map((blog, index) => {
-          return (
-            <Blog
-              blog={blog}
-              key={index}
-              updateBlog={updateBlog}
-              removeBlog={removeBlog}
-            />
-          );
-        })}
+        blogs
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog, index) => {
+            return (
+              <Blog
+                blog={blog}
+                key={index}
+                updateBlog={updateBlog}
+                removeBlog={removeBlog}
+              />
+            );
+          })}
 
       <p>
         Blog app, Department of Computer Science, University of Helsinki 2023
