@@ -7,6 +7,7 @@ const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
   const createNewAnecdote = (e, content) => {
+    console.log(content);
     e.preventDefault();
     console.log(content);
     dispatch(createAnecdote(content));
