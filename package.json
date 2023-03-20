@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "json-server -p3001 --watch db.json"
+    "server": "json-server -p3001 --watch db.json",
+    "anecdotes-server": "json-server -p3001 --watch anecdotes.json"
   },
   "keywords": [],
   "author": "",
