@@ -17,7 +17,7 @@ export default notificationSlice.reducer;
 
 let timeout = null;
 
-export const notificationHandler = (message) => {
+export const notificationHandler = (message, displayTime) => {
   return async (dispatch) => {
     dispatch(setNotification(message));
 
@@ -25,6 +25,9 @@ export const notificationHandler = (message) => {
       clearTimeout(timeout);
     }
 
-    timeout = setTimeout(() => dispatch(setNotification(null)), 5000);
+    timeout = setTimeout(
+      () => dispatch(setNotification(null)),
+      displayTime * 1000
+    );
   };
 };
