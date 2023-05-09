@@ -1,12 +1,12 @@
 {
-  "name": "fullstackopencourse2023",
+  "name": "first-steps",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "json-server -p3001 --watch db.json",
-    "anecdotes-server": "json-server -p3001 --watch anecdotes.json"
+    "ts-node": "ts-node",
+    "calculateExercises": "ts-node exerciseCalculator.ts"
   },
   "keywords": [],
   "author": "",
